@@ -1,0 +1,63 @@
+﻿@model MVCLogin.Models.tblUser
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Login</title>
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet" id="bootstrap-css" />
+    <link href="~/signin.css" rel="stylesheet" />
+    <script src="~/Scripts/bootstrap.min.js"></script>
+    <script src="~/Scripts/jquery-3.4.1.min.js"></script>
+</head>
+<body>
+    @using (Html.BeginForm("Authorise", "Login", FormMethod.Post))
+    {
+        @Html.AntiForgeryToken()
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-9 col-md-7 col-lg-5 mx-auto">
+                <div class="card card-signin my-5">
+                    <div class="card-body">
+                        <h5 class="card-title text-center">Sign In</h5>
+                        <form class="form-signin">
+                            <div class="form-label-group">
+                                @Html.TextBoxFor(Model => Model.userName, new { @class = "form-control", @placeholder = "User name" })
+                                @Html.ValidationMessageFor(model => Model.userName)
+                            </div>
+
+                            <div class="form-label-group">
+                                @Html.TextBoxFor(Model => Model.Password, new { @class = "form-control", @placeholder = "Password", @type = "password" })
+                                @Html.ValidationMessageFor(model => Model.Password)
+                            </div>
+
+                            <div class="custom-control custom-checkbox mb-3">
+                                <input type="checkbox" class="custom-control-input" id="customCheck1">
+                                <label class="custom-control-label" for="customCheck1">Remember password</label>
+                            </div>
+                            <hr class="my-4">
+
+                            <button class="btn btn-lg btn-primary btn-block text-uppercase" type="submit">Sign in</button>
+                            @Html.DisplayFor(model => model.LoginErrorMessage, new { @class = "control-label col-md-2" })
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    }
+
+    <script src="~/Scripts/jquery-3.4.1.slim.min.js"></script>
+    <script src="~/Scripts/popper.min.js"></script>
+    <script src="~/Scripts/bootstrap.min.js"></script>
+
+    <script src="~/Scripts/jquery-3.4.1.min.js"></script>
+    <script src="~/Scripts/jquery.validate.min.js"></script>
+    <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+</body>
+</html>
