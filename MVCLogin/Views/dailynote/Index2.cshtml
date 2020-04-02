@@ -1,0 +1,338 @@
+﻿@model MVCLogin.Models.DNDataModel
+@{
+    Layout = null;
+    if (Session["userID"] == null)
+    {
+        Response.Redirect("~/Login/Index");
+    }
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <title>
+        Daily Notes
+    </title>
+    <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, shrink-to-fit=no' name='viewport' />
+    <!--     Fonts and icons     -->
+    <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Roboto+Slab:400,700|Material+Icons" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css">
+    <link href="~/Content/jquery.datetimepicker.css" rel="stylesheet" />
+    <!-- CSS Files -->
+    @*<link href="~/assets/css/material-dashboard.css?v=2.1.0" rel="stylesheet" />*@
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+    <script src="../assets/js/core/jquery.min.js"></script>
+    <script src="../assets/js/core/popper.min.js"></script>
+    <script src="~/Scripts/bootstrap.min.js"></script>
+
+    @*<script src="../assets/js/core/bootstrap-material-design.min.js"></script>*@
+
+    <style>
+        html, body {
+            height: 100%; /*Fixes the height to 100% of the viewport*/
+        }
+
+        body {
+            padding-top: 87px; /*50px for the height of the navbar + 37px for the offset*/
+            padding-bottom: 50px; /*50px for the height of the bottom navbar*/
+        }
+
+        .navbar-offset {
+            top: 37px; /*Offsets the top navbar 37px from the top of the viewport*/
+        }
+
+        .container-fluid.scrollable {
+            height: 100%; /*Sets the scrollable area to 100% of the viewport*/
+            overflow: auto; /*Allows the scrollable area to have a scrollbar based on the height of its content*/
+            background: #ccc;
+        }
+
+        .dropdown-menu {
+            max-height: 200px;
+            overflow-y: auto;
+        }
+
+        .form-inline {
+            display: flex;
+            flex-flow: row wrap;
+            align-items: center;
+        }
+
+            .form-inline label {
+                margin: 5px 10px 5px 0;
+            }
+
+            .form-inline input {
+                vertical-align: middle;
+                margin: 5px 10px 5px 0;
+                padding: 10px;
+                background-color: #fff;
+                border: 1px solid #ddd;
+            }
+
+            .form-inline button {
+                padding: 5px 20px;
+                background-color: dodgerblue;
+                border: 1px solid #ddd;
+                color: white;
+                cursor: pointer;
+            }
+
+                .form-inline button:hover {
+                    background-color: royalblue;
+                }
+
+        @@media (max-width: 800px) {
+            .form-inline input {
+                margin: 10px 0;
+            }
+        }
+
+
+        .form-inline {
+            flex-direction: column;
+            align-items: stretch;
+        }
+    </style>
+
+</head>
+<body>
+    <div class="wrapper">
+        <div class="main-panel">
+            <!-- Navbar -->
+            <nav class="navbar fixed-top navbar-expand-sm navbar-light bg-white">
+                {
+                <div class="container-fluid">
+                    <div class="navbar-wrapper">
+                        <a class="navbar-brand" href="javascript:void(0)">Daily Notes</a>
+                    </div>
+                    <ul class="nav navbar-nav navbar-right">
+                        <li><span style="color:darkred">Hello @Session["userName"]</span></li>
+                    </ul>
+                    <button class="navbar-toggler" type="button" data-toggle="collapse" aria-controls="navigation-index" aria-expanded="false" aria-label="Toggle navigation" data-target="#navigation-example">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="navbar-toggler-icon icon-bar"></span>
+                        <span class="navbar-toggler-icon icon-bar"></span>
+                        <span class="navbar-toggler-icon icon-bar"></span>
+                    </button>
+                    <div class="collapse navbar-collapse justify-content-end">
+                        <form class="navbar-form">
+                            <div class="input-group no-border">
+                                <input type="text" value="" class="form-control" placeholder="Search...">
+                                <button type="submit" class="btn btn-default btn-round btn-just-icon">
+                                    <i class="material-icons">search</i>
+                                    <div class="ripple-container"></div>
+                                </button>
+                            </div>
+                        </form>
+                        <ul class="navbar-nav">
+                            <li class="nav-item">
+                                <a class="nav-link" href="javascript:void(0)">
+                                    <i class="material-icons">dashboard</i>
+                                    <p class="d-lg-none d-md-block">
+                                        Stats
+                                    </p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="@Url.Action("LogOut","Login")">
+                                    <i class="material-icons">person</i>
+                                    <p class="d-lg-none d-md-block">
+                                        Account
+                                    </p>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </nav>
+            <!-- End Navbar -->
+            <form class="form-inline">
+                <div class="container-sm">
+                    @using (Html.BeginForm("Index", "dailynote", FormMethod.Post))
+                    {
+                        <div class='row'>
+                            <div class="form-group">
+                                <label for="branch">Select Branch:</label>
+                                <div class="btn-group">
+                                    <button id="lstbtn" type="button" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        Branch List<span class="caret"></span>
+                                    </button>
+                                    <div class="dropdown-menu" id="brlist">
+                                        @foreach (var item in Model.GetBranches)
+                                        {
+                                            <a class="dropdown-item" href="#">@item.Text [@item.Value.Trim()]</a>
+                                            @*@Html.DropDownList("brcode", Model.GetBranches, "All Branches", new { @id = "ddlCountries" })*@
+
+                                        }
+                                    </div>
+                                    @Html.HiddenFor(model => model.GetBranches[0])
+                                </div>
+
+                                <label for="datepicker">Select Date: </label>
+                                <input placeholder="Selected date" type="date" id="datepicker" class="form-control" autocomplete="off">
+                                
+                                @*@Html.AntiForgeryToken()*@
+                                <input type="submit" class="btn btn-primary" name="submit" value="Submit"/>
+
+                            </div>
+                        </div>
+                    }
+                </div>
+            </form>
+            <table class=" table-bordered table-hover table-full-width table-inverse">
+                <thead class="">
+                <th>
+                    Memo No
+                </th>
+                <th>
+                    Voucher
+                </th>
+                <th>
+                    Description
+                </th>
+                <th>
+                    Cash
+                </th>
+                <th>
+                    DD
+                </th>
+                <th>
+                    CC
+                </th>
+                <th>
+                    Customer
+                </th>
+                <th>
+                    GV
+                </th>
+                <th>
+                    UPI
+                </th>
+                <th>
+                    Debit Total
+                </th>
+                <th>
+                    Voucher
+                </th>
+                <th>
+                    Narration
+                </th>
+                <th>
+                    Cash
+                </th>
+                <th>
+                    Cheque
+                </th>
+                <th>
+                    Credit Total
+                </th>
+                </thead>
+                <tbody>
+                    @foreach (var drow in @Model.Branches)
+                    {
+
+                        <tr>
+                            <td>
+                                @drow.memono
+                            </td>
+                            <td>
+                                @drow.Vno
+                            </td>
+                            <td>
+                                @drow.description
+                            </td>
+                            <td>
+                                @drow.cash
+                            </td>
+                            <td>
+                                @drow.dd
+                            </td>
+                            <td>
+                                @drow.cc
+                            </td>
+                            <td>
+                                @drow.customer
+                            </td>
+                            <td>
+                                @drow.gv
+                            </td>
+                            <td>
+                                @drow.upi
+                            </td>
+                            <td>
+                                @drow.totamount
+                            </td>
+                            <td>
+                                @drow.vno_credit
+                            </td>
+                            <td>
+                                @drow.description_credit
+                            </td>
+                            <td>
+                                @drow.cash_credit
+                            </td>
+                            <td>
+                                @drow.chq_credit
+                            </td>
+                            <td>
+                                @drow.totamount_credit
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+
+    <script type="text/javascript">
+
+        $('.dropdown-toggle').dropdown();
+        $(".dropdown-menu a ").click(function () {
+            let x = $(this).text();
+            var str = x.substr(x.indexOf("[") + 1, 3);
+            $("#lstbtn").text(x);
+            alert(x);
+            alert(str);
+            //document.getElementById("brlist").innerHTML = str;
+        });
+
+        $("body").on("change", "#lstbtn", function () {
+            $('#WebGridForm')[0].submit();
+        });
+
+
+
+        @* Data Picker Initialization *@
+        //$('.datepicker').pickadate({
+        //    today: '',
+        //    clear: 'Clear selection',
+        //    close: 'Cancel',
+        //    formatSubmit: 'yyyy-mm-dd',
+        //    hiddenPrefix: 'prefix__',
+        //    hiddenSuffix: '__suffix',
+        //    selectYears: true,
+        //    selectMonths: true
+        //});
+
+        //$("body").on("change", "#lstbranch", function () {
+        //    $('#WebGridForm')[0].submit();
+        //});
+        //$("body").on("click", ".Grid tfoot a", function () {
+        //    $('#WebGridForm').attr('action', $(this).attr('href')).submit();
+        //    return false;
+        //});
+
+
+
+    </script>
+
+    <script src="~/Scripts/jquery.datetimepicker.js"></script>
+    <script src="../assets/js/core/jquery.min.js"></script>
+    <script src="../assets/js/core/popper.min.js"></script>
+    <script src="~/Scripts/bootstrap.min.js"></script>
+
+</body>
+</html>

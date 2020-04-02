@@ -1,0 +1,92 @@
+﻿@model MVCLogin.Models.DNDataModel
+@{
+    Layout = null;
+    WebGrid webGrid = new WebGrid(source: Model.Branches, canSort: false, rowsPerPage: 10);
+    if (Session["userID"] == null)
+    {
+        Response.Redirect("~/Login/Index");
+    }
+}
+
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>
+        Daily Notes
+    </title>
+    <meta name="viewport" content="width=device-width" />
+
+    <style type="text/css">
+        body {
+            font-family: Arial;
+            font-size: 10pt;
+        }
+
+        .Grid {
+            border: 1px solid #ccc;
+            border-collapse: collapse;
+        }
+
+            .Grid th {
+                background-color: #F7F7F7;
+                font-weight: bold;
+            }
+
+            .Grid th, .Grid td {
+                padding: 5px;
+                border: 1px solid #ccc;
+            }
+
+            .Grid, .Grid table td {
+                border: 0px solid #ccc;
+            }
+
+                .Grid th a, .Grid th a:visited {
+                    color: #333;
+                }
+    </style>
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+</head>
+
+<body>
+    @using (Html.BeginForm("Index", "dailynote", FormMethod.Post))
+    {
+    @Html.DropDownList("brcode", Model.GetBranches, "Please select", new {@class = "form-control"})
+    @Html.TextBoxFor(m => m.cmdate, new { type = "date",@class = "form-control" })
+    <input type="submit" value="Submit" class="form-control">
+    }
+
+    <hr />
+    @webGrid.GetHtml(
+    htmlAttributes: new { @id = "WebGrid", @class = "Grid" },
+    columns: webGrid.Columns(
+    webGrid.Column("memono", "Memo No."),
+    webGrid.Column("Vno", "Voucher"),
+    webGrid.Column("description", "Description"),
+    webGrid.Column("cash", "Cash"),
+    webGrid.Column("dd", "Chq/DD"),
+    webGrid.Column("cc", "C-Card"),
+    webGrid.Column("customer", "Customer"),
+    webGrid.Column("gv", "GV"),
+    webGrid.Column("upi", "UPI"),
+    webGrid.Column("totamount", "Total"),
+    webGrid.Column("vno_credit", "Voucher"),
+    webGrid.Column("description_credit", "Description"),
+    webGrid.Column("cash_credit", "Cash"),
+    webGrid.Column("chq_credit", "Chq"),
+    webGrid.Column("totamount_credit", "Total")))
+
+    <script src="~/Scripts/bootstrap.js"></script>
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+    <script type="text/javascript">
+                                    //    $("body").on("change", "#brname", function () {
+                                    //        $('#WebGridForm')[0].submit();
+                                    //    });
+                                    //$("body").on("click", ".Grid tfoot a", function () {
+                                    //$('#WebGridForm').attr('action', $(this).attr('href')).submit();
+                                    //return false;
+                                    //});
+    </script>
+</body>
+</html>
+

@@ -1,0 +1,176 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="dndataModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="tblBranch">
+          <Key>
+            <PropertyRef Name="branchid" />
+          </Key>
+          <Property Name="branchid" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="brcode" Type="char" MaxLength="9" />
+          <Property Name="branch_name" Type="char" MaxLength="30" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'testdb.dbo.tblDailyNote' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="tblDailyNote">
+          <Key>
+            <PropertyRef Name="brcode" />
+            <PropertyRef Name="cmdate" />
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="brcode" Type="char" MaxLength="9" Nullable="false" />
+          <Property Name="cmdate" Type="date" Nullable="false" />
+          <Property Name="memono" Type="varchar" MaxLength="40" />
+          <Property Name="saletype" Type="varchar" MaxLength="20" />
+          <Property Name="Vno" Type="numeric" Precision="5" Scale="0" />
+          <Property Name="cash" Type="decimal" Precision="10" Scale="2" />
+          <Property Name="dd" Type="decimal" Precision="10" Scale="2" />
+          <Property Name="cc" Type="decimal" Precision="10" Scale="2" />
+          <Property Name="customer" Type="decimal" Precision="10" Scale="2" />
+          <Property Name="gv" Type="decimal" Precision="10" Scale="2" />
+          <Property Name="upi" Type="decimal" Precision="10" Scale="2" />
+          <Property Name="description" Type="varchar" MaxLength="200" />
+          <Property Name="totamount" Type="decimal" Precision="10" Scale="2" />
+          <Property Name="vno_credit" Type="numeric" Precision="5" Scale="0" />
+          <Property Name="description_credit" Type="varchar" MaxLength="100" />
+          <Property Name="cash_credit" Type="decimal" Precision="10" Scale="2" />
+          <Property Name="chq_credit" Type="decimal" Precision="10" Scale="2" />
+          <Property Name="totamount_credit" Type="decimal" Precision="10" Scale="2" />
+          <Property Name="ID" Type="bigint" Nullable="false" />
+        </EntityType>
+        <EntityContainer Name="dndataModelStoreContainer">
+          <EntitySet Name="tblBranch" EntityType="Self.tblBranch" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tblDailyNote" EntityType="Self.tblDailyNote" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [tblDailyNote].[brcode] AS [brcode], 
+    [tblDailyNote].[cmdate] AS [cmdate], 
+    [tblDailyNote].[memono] AS [memono], 
+    [tblDailyNote].[saletype] AS [saletype], 
+    [tblDailyNote].[Vno] AS [Vno], 
+    [tblDailyNote].[cash] AS [cash], 
+    [tblDailyNote].[dd] AS [dd], 
+    [tblDailyNote].[cc] AS [cc], 
+    [tblDailyNote].[customer] AS [customer], 
+    [tblDailyNote].[gv] AS [gv], 
+    [tblDailyNote].[upi] AS [upi], 
+    [tblDailyNote].[description] AS [description], 
+    [tblDailyNote].[totamount] AS [totamount], 
+    [tblDailyNote].[vno_credit] AS [vno_credit], 
+    [tblDailyNote].[description_credit] AS [description_credit], 
+    [tblDailyNote].[cash_credit] AS [cash_credit], 
+    [tblDailyNote].[chq_credit] AS [chq_credit], 
+    [tblDailyNote].[totamount_credit] AS [totamount_credit], 
+    [tblDailyNote].[ID] AS [ID]
+    FROM [dbo].[tblDailyNote] AS [tblDailyNote]</DefiningQuery>
+          </EntitySet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="dndataModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="tblBranch">
+          <Key>
+            <PropertyRef Name="branchid" />
+          </Key>
+          <Property Name="branchid" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="brcode" Type="String" MaxLength="9" FixedLength="true" Unicode="false" />
+          <Property Name="branch_name" Type="String" MaxLength="30" FixedLength="true" Unicode="false" />
+        </EntityType>
+        <EntityType Name="tblDailyNote">
+          <Key>
+            <PropertyRef Name="brcode" />
+            <PropertyRef Name="cmdate" />
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="brcode" Type="String" MaxLength="9" FixedLength="true" Unicode="false" Nullable="false" />
+          <Property Name="cmdate" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="memono" Type="String" MaxLength="40" FixedLength="false" Unicode="false" />
+          <Property Name="saletype" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="Vno" Type="Decimal" Precision="5" Scale="0" />
+          <Property Name="cash" Type="Decimal" Precision="10" Scale="2" />
+          <Property Name="dd" Type="Decimal" Precision="10" Scale="2" />
+          <Property Name="cc" Type="Decimal" Precision="10" Scale="2" />
+          <Property Name="customer" Type="Decimal" Precision="10" Scale="2" />
+          <Property Name="gv" Type="Decimal" Precision="10" Scale="2" />
+          <Property Name="upi" Type="Decimal" Precision="10" Scale="2" />
+          <Property Name="description" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="totamount" Type="Decimal" Precision="10" Scale="2" />
+          <Property Name="vno_credit" Type="Decimal" Precision="5" Scale="0" />
+          <Property Name="description_credit" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="cash_credit" Type="Decimal" Precision="10" Scale="2" />
+          <Property Name="chq_credit" Type="Decimal" Precision="10" Scale="2" />
+          <Property Name="totamount_credit" Type="Decimal" Precision="10" Scale="2" />
+          <Property Name="ID" Type="Int64" Nullable="false" />
+        </EntityType>
+        <EntityContainer Name="dndataEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="tblBranches" EntityType="Self.tblBranch" />
+          <EntitySet Name="tblDailyNotes" EntityType="Self.tblDailyNote" />
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="dndataModelStoreContainer" CdmEntityContainer="dndataEntities">
+          <EntitySetMapping Name="tblBranches">
+            <EntityTypeMapping TypeName="dndataModel.tblBranch">
+              <MappingFragment StoreEntitySet="tblBranch">
+                <ScalarProperty Name="branchid" ColumnName="branchid" />
+                <ScalarProperty Name="brcode" ColumnName="brcode" />
+                <ScalarProperty Name="branch_name" ColumnName="branch_name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tblDailyNotes">
+            <EntityTypeMapping TypeName="dndataModel.tblDailyNote">
+              <MappingFragment StoreEntitySet="tblDailyNote">
+                <ScalarProperty Name="brcode" ColumnName="brcode" />
+                <ScalarProperty Name="cmdate" ColumnName="cmdate" />
+                <ScalarProperty Name="memono" ColumnName="memono" />
+                <ScalarProperty Name="saletype" ColumnName="saletype" />
+                <ScalarProperty Name="Vno" ColumnName="Vno" />
+                <ScalarProperty Name="cash" ColumnName="cash" />
+                <ScalarProperty Name="dd" ColumnName="dd" />
+                <ScalarProperty Name="cc" ColumnName="cc" />
+                <ScalarProperty Name="customer" ColumnName="customer" />
+                <ScalarProperty Name="gv" ColumnName="gv" />
+                <ScalarProperty Name="upi" ColumnName="upi" />
+                <ScalarProperty Name="description" ColumnName="description" />
+                <ScalarProperty Name="totamount" ColumnName="totamount" />
+                <ScalarProperty Name="vno_credit" ColumnName="vno_credit" />
+                <ScalarProperty Name="description_credit" ColumnName="description_credit" />
+                <ScalarProperty Name="cash_credit" ColumnName="cash_credit" />
+                <ScalarProperty Name="chq_credit" ColumnName="chq_credit" />
+                <ScalarProperty Name="totamount_credit" ColumnName="totamount_credit" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
